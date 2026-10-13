@@ -1,0 +1,38 @@
+<section class="container py-5">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <h1 class="mb-0">Liste des événements</h1>
+    <a class="btn btn-primary" routerLink="/events/add">+ Ajouter un événement</a>
+  </div>
+  @if (q()) {
+    <p class="text-muted">
+      {{ filteredEvents().length }} résultat(s) pour « {{ q() }} »
+      <a class="ms-2" routerLink="/events">Effacer la recherche</a>
+    </p>
+  }
+  <div class="row g-4">
+    @for (event of filteredEvents(); track event.id) {
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h3 class="card-title">{{ event.title }}</h3>
+            <p class="card-text"><strong>Description :</strong> {{ event.description }}</p>
+            <p class="card-text">📍 <strong>Lieu :</strong> {{ event.location }}</p>
+            <p class="card-text">📅 <strong>Date :</strong> {{ event.date | date: 'dd-MM-yyyy' }}</p>
+            <p class="card-text">💰 <strong>Prix :</strong> {{ event.price }} DT</p>
+            <p class="card-text">
+              🎟️ <strong>Places disponibles :</strong> {{ event.availablePlaces }}
+              @if (event.availablePlaces === 0) {
+                <span class="badge bg-danger ms-2">Complet</span>
+              }
+            </p>
+          </div>
+          <div class="card-footer bg-transparent border-0 pb-3">
+            <a class="btn btn-outline-secondary" [routerLink]="['/events', event.id]">Voir détails</a>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <p class="text-muted">Aucun événement trouvé.</p>
+    }
+  </div>
+</section>

@@ -1,0 +1,49 @@
+<section class="container py-5">
+  <h1 class="mb-4">Products</h1>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Likes</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of products(); track product.id) {
+          <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price | currency }}</td>
+            <td>
+              {{ product.quantity }}
+              @if (product.quantity === 0) {
+                <span class="badge bg-danger ms-2">Rupture</span>
+              }
+            </td>
+            <td>{{ product.likes }}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="like(product.id)">
+                Like
+              </button>
+              <button
+                class="btn btn-sm btn-success"
+                (click)="buy(product.id)"
+                [disabled]="product.quantity === 0"
+              >
+                Buy
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="text-center">No products available.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

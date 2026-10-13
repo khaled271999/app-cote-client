@@ -1,0 +1,160 @@
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <h1 class="mb-4">Ajouter un événement</h1>
+
+      <form class="card shadow-sm" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label" for="title">Titre <span class="text-danger">*</span></label>
+            <input
+              id="title"
+              type="text"
+              class="form-control"
+              formControlName="title"
+              [class.is-invalid]="isInvalid('title')"
+            />
+            @if (isInvalid('title')) {
+              <div class="invalid-feedback">
+                @if (form.controls.title.hasError('required') || form.controls.title.hasError('blank')) {
+                  Le titre est obligatoire.
+                } @else if (form.controls.title.hasError('minlength')) {
+                  Le titre doit contenir au moins 3 caractères.
+                } @else if (form.controls.title.hasError('maxlength')) {
+                  Le titre ne doit pas dépasser 50 caractères.
+                }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="description">
+              Description <span class="text-danger">*</span>
+            </label>
+            <textarea
+              id="description"
+              rows="3"
+              class="form-control"
+              formControlName="description"
+              [class.is-invalid]="isInvalid('description')"
+            ></textarea>
+            @if (isInvalid('description')) {
+              <div class="invalid-feedback">
+                @if (
+                  form.controls.description.hasError('required') ||
+                  form.controls.description.hasError('blank')
+                ) {
+                  La description est obligatoire.
+                } @else if (form.controls.description.hasError('minlength')) {
+                  La description doit contenir au moins 10 caractères.
+                } @else if (form.controls.description.hasError('maxlength')) {
+                  La description ne doit pas dépasser 300 caractères.
+                }
+              </div>
+            }
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6 mb-3">
+              <label class="form-label" for="location">Lieu <span class="text-danger">*</span></label>
+              <input
+                id="location"
+                type="text"
+                class="form-control"
+                formControlName="location"
+                [class.is-invalid]="isInvalid('location')"
+              />
+              @if (isInvalid('location')) {
+                <div class="invalid-feedback">
+                  @if (
+                    form.controls.location.hasError('required') ||
+                    form.controls.location.hasError('blank')
+                  ) {
+                    Le lieu est obligatoire.
+                  } @else if (form.controls.location.hasError('minlength')) {
+                    Le lieu doit contenir au moins 2 caractères.
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label class="form-label" for="date">Date <span class="text-danger">*</span></label>
+              <input
+                id="date"
+                type="date"
+                class="form-control"
+                formControlName="date"
+                [class.is-invalid]="isInvalid('date')"
+              />
+              @if (isInvalid('date')) {
+                <div class="invalid-feedback">
+                  @if (form.controls.date.hasError('required')) {
+                    La date est obligatoire.
+                  } @else if (form.controls.date.hasError('pastDate')) {
+                    La date ne peut pas être dans le passé.
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6 mb-3">
+              <label class="form-label" for="price">Prix (DT) <span class="text-danger">*</span></label>
+              <input
+                id="price"
+                type="number"
+                min="0"
+                step="0.01"
+                class="form-control"
+                formControlName="price"
+                [class.is-invalid]="isInvalid('price')"
+              />
+              @if (isInvalid('price')) {
+                <div class="invalid-feedback">
+                  @if (form.controls.price.hasError('required')) {
+                    Le prix est obligatoire et doit être un nombre.
+                  } @else if (form.controls.price.hasError('min')) {
+                    Le prix ne peut pas être négatif.
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label class="form-label" for="availablePlaces">
+                Places disponibles <span class="text-danger">*</span>
+              </label>
+              <input
+                id="availablePlaces"
+                type="number"
+                min="1"
+                step="1"
+                class="form-control"
+                formControlName="availablePlaces"
+                [class.is-invalid]="isInvalid('availablePlaces')"
+              />
+              @if (isInvalid('availablePlaces')) {
+                <div class="invalid-feedback">
+                  @if (form.controls.availablePlaces.hasError('required')) {
+                    Le nombre de places est obligatoire.
+                  } @else if (form.controls.availablePlaces.hasError('min')) {
+                    Il faut au moins 1 place disponible.
+                  } @else if (form.controls.availablePlaces.hasError('pattern')) {
+                    Le nombre de places doit être un entier.
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer bg-transparent d-flex gap-2 justify-content-end py-3">
+          <a class="btn btn-outline-secondary" routerLink="/events">Annuler</a>
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
